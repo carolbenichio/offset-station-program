@@ -1,5 +1,4 @@
-﻿
-using Calculation;
+﻿using Calculation;
 using ValueObjects;
 
 namespace Program;
@@ -13,8 +12,7 @@ internal class Program
 
 		using(StreamReader reader = new StreamReader("input_loops_and_dups.csv"))
 		{
-            // Creates list from .csv file
-            // Ex: ["150, 300", "300, 130", "80, 100", "-50, 40", ...]
+            // Creates list from .csv file. Ex: ["150, 300", "300, 130", "80, 100", "-50, 40", ...]
 			List<string> coordinates = new List<string>();
 			while(!reader.EndOfStream)
 			{
@@ -23,10 +21,7 @@ internal class Program
 			}
 
             // Creates a Point List from the coordinates
-            // Ex: [Point1, Point2, Point3, Point4]
-            // Where Point1 has X and Y properties like 
-            // Point1.X = 150 (double)
-            // Point1.Y = 300 (double)
+            // Ex: [Point1, Point2, Point3, Point4] where Point1 has X and Y properties like Point1.X = 150 and Point1.Y = 300 (double)
 			List<Point> polylinePoints = new List<Point>();
 			foreach(string coordinate in coordinates)
 			{
@@ -35,14 +30,11 @@ internal class Program
 
             // Prints information from the file and each point on console
             Console.WriteLine($"The file contains {coordinates.Count} coordinate points along the polyline.");
-
             Console.WriteLine($"-------------------------------------------------------------------------");
-
 			foreach(Point point in polylinePoints)
 			{
 			    Console.WriteLine($"The X is {point.X} and the Y is {point.Y}.");
 			}
-
 			Console.WriteLine($"-------------------------------------------------------------------------");
 
             // Expects the X and Y coordinates from the user
@@ -66,86 +58,59 @@ internal class Program
             List<LinearEquation> linearEquations = new List<LinearEquation>();
             for(var i = 0; i < polylinePoints.Count - 1; i++)
             {
-                double slope = equations.GetEquationSlope(polylinePoints[i], polylinePoints[i + 1]);
-			    double intersection = equations.GetEquationIntersection(slope, polylinePoints[i]);
-
-                LinearEquation linearEquation = new LinearEquation();
-                linearEquation.Slope = slope;
-                linearEquation.Intersection = intersection;
-                // linearEquation.Interval1.X = polylinePoints[i].X; 
-                // linearEquation.Interval1.Y = polylinePoints[i].Y;
-                // linearEquation.Interval2.X = polylinePoints[i + 1].X;
-                // linearEquation.Interval2.Y = polylinePoints[i + 1].Y;
-
+                LinearEquation linearEquation = equations.GetLinearEquation(polylinePoints[i], polylinePoints[i + 1]);
                 linearEquations.Add(linearEquation);
-                Console.WriteLine($"The linear equation of ({polylinePoints[i].X}, {polylinePoints[i].Y}) and ({polylinePoints[i+1].X}, {polylinePoints[i+1].Y}) is y = {slope}x + ({intersection}).");
+
+                Console.WriteLine($"The linear equation of ({polylinePoints[i].X}, {polylinePoints[i].Y}) and ({polylinePoints[i+1].X}, {polylinePoints[i+1].Y}) is y = {linearEquation.Slope}x + ({linearEquation.Intersection}).");
             }
 
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine($"To find the smallest distance, our Offset, between the choosing point ({userX}, {userY}), here are all the distances from every linear equation of the polyline:");
+            Console.WriteLine($"-------------------------------------------------------------------------");
 
-            // Calculates all the distances using the slope and intersection from the linear equation and the X and Y from the entered point and check if is valid (inside the interval).
-            List<double> distances = new List<double>();
-            foreach(LinearEquation linearEquation in linearEquations)
+            List<IntersectionPoint> intersectionPoints = equations.GetValidIntersectionPointFromLinearEquationsAndPoint(linearEquations, userPoint, polylinePoints, userPoint);
+
+            Console.WriteLine($"List of valid intersection point(s) of the UserPoint linear equation and the current linear equation is(are):");
+            foreach(IntersectionPoint intersectionPoint in intersectionPoints)
+            { 
+                Console.WriteLine($"({intersectionPoint.Point.X}, {intersectionPoint.Point.Y})");
+            }
+
+            // Gets the smaller distance on the list
+            var smallerDistanceIntersectionPoint = intersectionPoints.OrderBy(ip => ip.Distance).First();
+            var smallerDistanceIntersectionPointDistance = smallerDistanceIntersectionPoint.Distance;
+
+            // Calculates first distance between intersection point and next coordinate
+            Point previousPoint = new Point();
+
+            foreach(Point point in polylinePoints)
             {
-                double distance = equations.GetDistanceFromPointToLinearEquation(linearEquation, userPoint);
-                distances.Add(distance);
-                Console.WriteLine($"The distance between the UserPoint ({userX}, {userY}) from the linear equation y = {linearEquation.Slope}x + ({linearEquation.Intersection}) is {distance}");
+                if(point.X == smallerDistanceIntersectionPoint.LinearEquation.X1 && point.Y == smallerDistanceIntersectionPoint.LinearEquation.Y1)
+                {
+                    previousPoint.X = point.X;
+                    previousPoint.Y = point.Y;
+                }
             }
-            double offset = distances.AsQueryable().Min();
-            Console.WriteLine($"Therefor, the Offset is the smallest distance: {offset}");
-            Console.WriteLine("-----------------------------------------------------");
 
-            // TO DO: insert a loop to check if the intersection point its between the seted interval (!!!!!!!!!!!)
+            previousPoint.X = smallerDistanceIntersectionPoint.LinearEquation.X1;
+            previousPoint.Y = smallerDistanceIntersectionPoint.LinearEquation.Y1;
+            double previousPointDistance = equations.GetDistanceBetweenPoints(smallerDistanceIntersectionPoint.Point, previousPoint);
 
-            // if(intersectionPoint.X > polylinePoints[index].X && intersectionPoint.X < polylinePoints[index + 1].X ||
-            //     (intersectionPoint.X > polylinePoints[index].Y && intersectionPoint.X < polylinePoints[index + 1].Y))
-            // {
-            //     distances.Remove(distances[index]);
-            //     // foreach(double distance in distances)
-            //     // {
-            //     //     Console.WriteLine($"WORKING: {distance}");
-            //     // }
-            //     var newDistance = distances.AsQueryable().Min();
-            //     int newIndex = distances.FindIndex(d => d == newDistance); 
-            //     index = newIndex;
-            // }
+            // Find index of previous point
+            int previousPointIndex = polylinePoints.FindIndex(pp => pp.X == previousPoint.X && pp.Y == previousPoint.Y);
 
-            // Ex: (117.6470588235294, 129.41176470588235) is the intersection point with the smallest distance but is not inside the points interval for that linear equation (200,150) and (300, 175).
-            // Along with the linear expression, we need to check if the X is between 200 and 300 and/or the Y is between 150 and 175.
-            // If not, take the next smaller distance and check it again. 
-
-            // Gets the index from the smallest distance
-            int index = distances.FindIndex(d => d == offset);
-            Console.WriteLine($"{index}");
-
-            // Gets the linear equation with the smallest distance
-            LinearEquation intersectionLinearEquation = linearEquations[index];
-            Console.WriteLine(intersectionLinearEquation.Slope);
-            Console.WriteLine(intersectionLinearEquation.Intersection);
-
-            // Gets the perpendicular linear equation that passes through the point and the previous linear equation
-            LinearEquation perpendicularLinearEquation = equations.GetPerpendicularLinearEquation(userPoint, intersectionLinearEquation.Slope);
-            Console.WriteLine(perpendicularLinearEquation.Slope);
-            Console.WriteLine(perpendicularLinearEquation.Intersection);
-
-            // Calculates the intersection point between perpedicular linear equation and origial linear equation.
-            Point intersectionPoint = new Point();
-            intersectionPoint = equations.GetIntersectionPointFromLinearEquations(intersectionLinearEquation, perpendicularLinearEquation);
-            Console.WriteLine($"{intersectionPoint.X}, {intersectionPoint.Y}");
-
-            // Calculates the distante between the Intersection Point and the previous point
-            double previousPointDistance = equations.GetDistanceBetweenPoints(intersectionPoint, polylinePoints[index - 1]);
-            Console.WriteLine(previousPointDistance);
+            Console.WriteLine($"-------------------------------------------------------------------------");
 
             // Calculates the station from the index of the smallest distance to the start of the polyline
             double station = previousPointDistance;
-            for(var i = index - 1; i > 0; i--)
+            for(var i = previousPointIndex - 1; i >= 0; i--)
             {
+                // Console.WriteLine($"{station}");
                 var pointsDistance = equations.GetDistanceBetweenPoints(polylinePoints[i], polylinePoints[i+1]);
                 station += pointsDistance;
-                Console.WriteLine(station);
+                // Console.WriteLine($"{station}, {pointsDistance}");
             }
+
+            Console.WriteLine($"OFFSET: {smallerDistanceIntersectionPointDistance}");
+            Console.WriteLine($"STATION: {station}");
 		}
 	}
 }
