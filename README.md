@@ -68,8 +68,8 @@ The linear equation of (200, 150) and (300, 175) is y = 0.25x + (100).
     - Checks if the intersection point is valid (within range X1, Y1 and X2, Y2);
     - 🧮 **GetDistanceFromPointToLinearEquation**; 
       - If true, the point is valid and added to the list of valid intersection points;
-      - If false, the poing is ignored.
-    - If the list of points it's empty then we inform that to the user and the distance will be measure from the given point to the closest point of the polyline coordinates.
+      - If false, the point is ignored.
+    - If the list of points it's empty then we inform that to the user and the distance will be measured from the given point to the closest point of the polyline coordinates.
       - 🧮 **GetDistanceFromPointToPolylinePoint**.
     
 5. Then, the program order the IntersectionPoint list by distance (or Offset) and shows it to the user:
@@ -82,7 +82,7 @@ List of valid intersection point(s) of the UserPoint linear equation and the cur
 ``` 
 
 6. After that, the program starts calculating the distance from the previous point of the polyline:
-- If the intersection point it's not one of the polyline points, we calculate the distance between that point to the previous poyline point (🧮 **GetDistanceBetweenPoints**).
+- If the intersection point is not one of the polyline points, we calculate the distance between that point to the previous polyline point (🧮 **GetDistanceBetweenPoints**).
 - If the intersection point has the same X and Y coodinate as some point of the polyline coordinates, then the previous point is already the polyline point, therefor, the Station value for now is 0.
 
 7. Finally, the program calculates the next distances until it gets to the start of the polyline:
