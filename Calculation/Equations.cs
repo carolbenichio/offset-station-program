@@ -4,8 +4,6 @@ namespace Calculation;
 
 public class Equations : IEquations
 {
-  	public List<double> LinearEquation { get; set; }
-
     public LinearEquation GetLinearEquation(Point P1, Point P2)
     {
 		double slope = (P1.Y - P2.Y)/(P1.X - P2.X);
@@ -55,7 +53,7 @@ public class Equations : IEquations
         return Math.Sqrt(rightEquation);
     }
 
-    public List<IntersectionPoint> GetValidIntersectionPointFromLinearEquationsAndPoint(List<LinearEquation> linearEquations, Point point, List<Point> polylinePoints, Point userPoint)
+    public List<IntersectionPoint> GetValidIntersectionPointsFromLinearEquationsAndPoint(List<LinearEquation> linearEquations, Point point, List<Point> polylinePoints, Point userPoint)
     {
         List<IntersectionPoint> intersectionPoints = new List<IntersectionPoint>();
         for(var i = 0; i < linearEquations.Count; i++)
@@ -64,7 +62,6 @@ public class Equations : IEquations
             var perpendicularLinearEquation = GetPerpendicularLinearEquation(point, linearEquations[i].Slope);
             intersectionPoint.Point = GetIntersectionPointFromLinearEquations(perpendicularLinearEquation, linearEquations[i]);
             
-            // Checks if the intersection point is valid (inside interval)
             if(intersectionPoint.Point.X > linearEquations[i].X1 && intersectionPoint.Point.X < linearEquations[i].X2 &&
                 intersectionPoint.Point.Y > linearEquations[i].Y1 && intersectionPoint.Point.Y < linearEquations[i].Y2)
             {
@@ -90,7 +87,6 @@ public class Equations : IEquations
         Console.WriteLine("so the distance is going to be measured from the given point to the closest point of the polyline.");
         
         List<double> distancesPointToPolylinePoints = new List<double>();
-
         for(var i = 0; i < polylinePoints.Count; i++)
         {
             distancesPointToPolylinePoints.Add(GetDistanceBetweenPoints(userPoint, polylinePoints[i]));
@@ -103,5 +99,4 @@ public class Equations : IEquations
 
         return intersectionPoint;
     }
-
 }

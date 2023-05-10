@@ -1,7 +1,7 @@
 namespace ValueObjects;
 
-public class Point // working
+public class Point
 {
-  public double X { get; set; }
-  public double Y { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
 }
