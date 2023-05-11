@@ -17,7 +17,7 @@ location on the polyline where the smallest perpendicular line from the Point in
 - You’ll need to access the ```offset-station-program-test``` folder’s terminal and run the following command:
     - ```dotnet test``` 
 
-### Here are the steps of the program using a example:
+###  Here are the steps of the program using a example:
 
 1. The coordinates of the Polyline are read directly from an ASCII comma separated file containing Easting and Northing values and contain only data, no headers:
 
