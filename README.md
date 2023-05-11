@@ -23,7 +23,7 @@ Here are the steps of the program using a example:
 
 ```
 The file contains 7 coordinate points along the polyline.
-_________________________________________________________________________
+-------------------------------------------------------------------------
 The X is -150 and the Y is -200.
 The X is -100 and the Y is -45.
 The X is 20 and the Y is 40.
@@ -31,7 +31,7 @@ The X is 100 and the Y is 45.
 The X is 125 and the Y is 100.
 The X is 200 and the Y is 150.
 The X is 300 and the Y is 175.
-_________________________________________________________________________
+-------------------------------------------------------------------------
 Please enter an Easting value (the X):
 ```
 
@@ -49,7 +49,7 @@ Please enter an Easting value (the X):
 100
 Please enter an Northing value (the Y):
 200
-_________________________________________________________________________
+-------------------------------------------------------------------------
 The linear equation of (-150, -200) and (-100, -45) is y = 3.1x + (265).
 The linear equation of (-100, -45) and (20, 40) is y = 0.7083333333333334x + (25.833333333333343).
 The linear equation of (20, 40) and (100, 45) is y = 0.0625x + (38.75).
@@ -76,7 +76,7 @@ The linear equation of (200, 150) and (300, 175) is y = 0.25x + (100).
 
 ```
 This intersection point is valid: (153.84615384615384, 119.23076923076923) and it's distance is 97.0725343394151.
-_________________________________________________________________________
+-------------------------------------------------------------------------
 List of valid intersection point(s) of the UserPoint linear equation and the current linear equation is(are):
 (153.84615384615384, 119.23076923076923)
 ``` 
