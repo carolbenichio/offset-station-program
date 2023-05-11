@@ -1,5 +1,5 @@
 ﻿using Calculation;
-using Service;
+using Services;
 using ValueObjects;
 
 namespace Program;
@@ -23,7 +23,7 @@ internal class Program
 
         List<LinearEquation> linearEquations = equationsService.GetLinearEquations(polylinePoints);
 
-        List<IntersectionPoint> intersectionPoints = equationsService.GetValidIntersectionPointsFromLinearEquationsAndPoint(linearEquations, userPoint, polylinePoints, userPoint);
+        List<IntersectionPoint> intersectionPoints = equationsService.GetValidIntersectionPointsFromLinearEquationsAndPoint(linearEquations, polylinePoints, userPoint);
 
         var smallerDistanceIntersectionPoint = equationsService.GetSmallerDistanceIntersectionPoint(intersectionPoints);
 

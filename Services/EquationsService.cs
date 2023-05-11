@@ -1,9 +1,10 @@
 using Calculation;
+using Services.Interfaces;
 using ValueObjects;
 
-namespace Service;
+namespace Services;
 
-public class EquationsService
+public class EquationsService : IEquationsServices
 {
     private readonly Equations _equations;
     private readonly PointsFactory _pointsFactory;
@@ -91,19 +92,19 @@ public class EquationsService
         return linearEquations;
     }
 
-    public List<IntersectionPoint> GetValidIntersectionPointsFromLinearEquationsAndPoint(List<LinearEquation> linearEquations, Point point, List<Point> polylinePoints, Point userPoint)
+    public List<IntersectionPoint> GetValidIntersectionPointsFromLinearEquationsAndPoint(List<LinearEquation> linearEquations, List<Point> polylinePoints, Point userPoint)
     {
         List<IntersectionPoint> intersectionPoints = new List<IntersectionPoint>();
         for(var i = 0; i < linearEquations.Count; i++)
         {
             IntersectionPoint intersectionPoint = new IntersectionPoint();
-            var perpendicularLinearEquation = _equations.GetPerpendicularLinearEquation(point, linearEquations[i].Slope);
+            var perpendicularLinearEquation = _equations.GetPerpendicularLinearEquation(userPoint, linearEquations[i].Slope);
             intersectionPoint.Point = _equations.GetIntersectionPointFromLinearEquations(perpendicularLinearEquation, linearEquations[i]);
             
             if(intersectionPoint.Point.X > linearEquations[i].X1 && intersectionPoint.Point.X < linearEquations[i].X2 &&
                 intersectionPoint.Point.Y > linearEquations[i].Y1 && intersectionPoint.Point.Y < linearEquations[i].Y2)
             {
-                intersectionPoint.Distance = _equations.GetDistanceFromPointToLinearEquation(linearEquations[i], point);
+                intersectionPoint.Distance = _equations.GetDistanceFromPointToLinearEquation(linearEquations[i], userPoint);
                 Console.WriteLine($"This intersection point is valid: ({intersectionPoint.Point.X}, {intersectionPoint.Point.Y}) and it's distance is {intersectionPoint.Distance}.");
                 intersectionPoint.LinearEquation = linearEquations[i];
                 intersectionPoints.Add(intersectionPoint);
@@ -113,7 +114,7 @@ public class EquationsService
         if(intersectionPoints.Count == 0)
         {
             IntersectionPoint intersectionPoint = new IntersectionPoint();
-            intersectionPoint = _equations.GetDistanceFromPointToPolylinePoint(linearEquations, point, polylinePoints, userPoint, intersectionPoint);
+            intersectionPoint = _equations.GetDistanceFromPointToPolylinePoint(linearEquations, polylinePoints, userPoint, intersectionPoint);
             intersectionPoints.Add(intersectionPoint);
         }
 

@@ -1,3 +1,4 @@
+using Calculation.Interfaces;
 using ValueObjects;
 
 namespace Calculation;
@@ -53,7 +54,7 @@ public class Equations : IEquations
         return Math.Sqrt(rightEquation);
     }
 
-    public IntersectionPoint GetDistanceFromPointToPolylinePoint(List<LinearEquation> linearEquations, Point point, List<Point> polylinePoints, Point userPoint, IntersectionPoint intersectionPoint)
+    public IntersectionPoint GetDistanceFromPointToPolylinePoint(List<LinearEquation> linearEquations, List<Point> polylinePoints, Point userPoint, IntersectionPoint intersectionPoint)
     {
         Console.WriteLine("There are no perpendicular linear equations from the point to the polyline");
         Console.WriteLine("so the distance is going to be measured from the given point to the closest point of the polyline.");
