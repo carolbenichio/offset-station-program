@@ -1,7 +1,7 @@
 # Offset-Station Program 🗺️
 
 This application is able to calculate the Offset and Station between a Point and a Polyline. 
-- <i>"Offset” is defined to be the smallest perpendicular distance to the polyline from the given Point</i>
+- <i>"Offset” is defined to be the smallest perpendicular distance to the polyline from the given Point.</i>
 - <i>"Station” is defined to be the distance from the start of the polyline, along the polyline, down to the
 location on the polyline where the smallest perpendicular line from the Point intersects the polyline.</i>
 
@@ -9,7 +9,7 @@ location on the polyline where the smallest perpendicular line from the Point in
 
 ### 💻 How to run the program:
 
-- If you're using **Windows OS**, you can just click twice at the ```offset-station-program.exe``` file;
+- If you're using **Windows**, you can just click twice at the ```offset-station-program.exe``` file;
 - If you're using **Mac** or **Linux**, you'll need to access the program’s folder and run the following command at the terminal:
     - ```dotnet run```  
 
