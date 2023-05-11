@@ -38,5 +38,7 @@ internal class Program
         Console.WriteLine($"OFFSET: {offset}.");
         Console.WriteLine($"STATION: {station}.");
         Console.WriteLine($"-------------------------------------------------------------------------");
+        Console.WriteLine($"Press any key to close.");
+        Console.ReadLine();
     }
 }
