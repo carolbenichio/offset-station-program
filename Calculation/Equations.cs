@@ -53,34 +53,6 @@ public class Equations : IEquations
         return Math.Sqrt(rightEquation);
     }
 
-    public List<IntersectionPoint> GetValidIntersectionPointsFromLinearEquationsAndPoint(List<LinearEquation> linearEquations, Point point, List<Point> polylinePoints, Point userPoint)
-    {
-        List<IntersectionPoint> intersectionPoints = new List<IntersectionPoint>();
-        for(var i = 0; i < linearEquations.Count; i++)
-        {
-            IntersectionPoint intersectionPoint = new IntersectionPoint();
-            var perpendicularLinearEquation = GetPerpendicularLinearEquation(point, linearEquations[i].Slope);
-            intersectionPoint.Point = GetIntersectionPointFromLinearEquations(perpendicularLinearEquation, linearEquations[i]);
-            
-            if(intersectionPoint.Point.X > linearEquations[i].X1 && intersectionPoint.Point.X < linearEquations[i].X2 &&
-                intersectionPoint.Point.Y > linearEquations[i].Y1 && intersectionPoint.Point.Y < linearEquations[i].Y2)
-            {
-                intersectionPoint.Distance = GetDistanceFromPointToLinearEquation(linearEquations[i], point);
-                Console.WriteLine($"This intersection point is valid: ({intersectionPoint.Point.X}, {intersectionPoint.Point.Y}) and it's distance is {intersectionPoint.Distance}.");
-                intersectionPoint.LinearEquation = linearEquations[i];
-                intersectionPoints.Add(intersectionPoint);
-            }
-        }
-
-        if(intersectionPoints.Count == 0)
-        {
-            IntersectionPoint intersectionPoint = new IntersectionPoint();
-            intersectionPoint = GetDistanceFromPointToPolylinePoint(linearEquations, point, polylinePoints, userPoint, intersectionPoint);
-            intersectionPoints.Add(intersectionPoint);
-        }
-        return intersectionPoints;
-    }
-
     public IntersectionPoint GetDistanceFromPointToPolylinePoint(List<LinearEquation> linearEquations, Point point, List<Point> polylinePoints, Point userPoint, IntersectionPoint intersectionPoint)
     {
         Console.WriteLine("There are no perpendicular linear equations from the point to the polyline");
@@ -95,7 +67,13 @@ public class Equations : IEquations
         int smallerDistanceIndex = distancesPointToPolylinePoints.IndexOf(distancesPointToPolylinePoints.Min());
         intersectionPoint.Distance = distancesPointToPolylinePoints[smallerDistanceIndex];
         intersectionPoint.Point = polylinePoints[smallerDistanceIndex];
-        intersectionPoint.LinearEquation = linearEquations[smallerDistanceIndex];
+        if(smallerDistanceIndex == 0)
+        {
+            intersectionPoint.LinearEquation = linearEquations[smallerDistanceIndex + 1];
+        } else 
+        {
+            intersectionPoint.LinearEquation = linearEquations[smallerDistanceIndex - 1];
+        }
 
         return intersectionPoint;
     }
