@@ -75,7 +75,7 @@ The linear equation of (200, 150) and (300, 175) is y = 0.25x + (100).
 5. Then, the program order the IntersectionPoint list by distance (or Offset) and shows it to the user:
 
 ```
-This intersection point is valid: (153.84615384615384, 119.23076923076923) and it's distance is 97.0725343394151.
+This intersection point is valid: (153.84615384615384, 119.23076923076923) and its distance is 97.0725343394151.
 -------------------------------------------------------------------------
 List of valid intersection point(s) of the UserPoint linear equation and the current linear equation is(are):
 (153.84615384615384, 119.23076923076923)
@@ -83,7 +83,7 @@ List of valid intersection point(s) of the UserPoint linear equation and the cur
 
 6. After that, the program starts calculating the distance from the previous point of the polyline:
 - If the intersection point is not one of the polyline points, we calculate the distance between that point to the previous polyline point (🧮 **GetDistanceBetweenPoints**).
-- If the intersection point has the same X and Y coodinate as some point of the polyline coordinates, then the previous point is already the polyline point, therefor, the Station value for now is 0.
+- If the intersection point has the same X and Y coordinate as some point of the polyline coordinates, then the previous point is already the polyline point, therefor, the Station value for now is 0.
 
 7. Finally, the program calculates the next distances until it gets to the start of the polyline:
 
@@ -96,6 +96,6 @@ STATION: 485.1594762890074
 
 <i>All numbers remained with their original decimal places in order not to interfere with the accuracy of the final result.</i>
 
-Any feedback is more then welcome. Thanks! <br>
+Any feedback is more than welcome. Thanks! <br>
 <i>Caroline Benichio Teixeira, 2023.</i>
 
