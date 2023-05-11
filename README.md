@@ -7,12 +7,15 @@ location on the polyline where the smallest perpendicular line from the Point in
 
 ![Offset, station, polyline and point example](https://github.com/carolbenichio/offset-station-program/assets/78769105/00c7a717-d8ae-446a-89db-9ecc8098044f)
 
-### How to run the program:
+### 💻 How to run the program:
 
 - If you're using **Windows OS**, you can just click twice at the ```offset-station-program.exe``` file;
 - If you're using **Mac** or **Linux**, you'll need to access the program’s folder and run the following command at the terminal:
     - ```dotnet run```  
 
+### 🧪 How to run the program tests :
+- You’ll need to access the ```offset-station-program-test``` folder’s terminal and run the following command:
+    - ```dotnet test``` 
 
 ### Here are the steps of the program using a example:
 
