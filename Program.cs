@@ -15,25 +15,25 @@ internal class Program
         var equations = new Equations();
         var pointsFactory = new PointsFactory();
 
-        var services = new Services(equations, pointsFactory);
+        var equationsService = new EquationsService(equations, pointsFactory);
 
-        List<Point> polylinePoints = services.GetPointsListFromCSVFile();
+        List<Point> polylinePoints = equationsService.GetPointsListFromCSVFile();
 
-        Point userPoint = services.GetUserPoint();
+        Point userPoint = equationsService.GetUserPoint();
 
-        List<LinearEquation> linearEquations = services.GetLinearEquations(polylinePoints);
+        List<LinearEquation> linearEquations = equationsService.GetLinearEquations(polylinePoints);
 
-        List<IntersectionPoint> intersectionPoints = services.GetValidIntersectionPointsFromLinearEquationsAndPoint(linearEquations, userPoint, polylinePoints, userPoint);
+        List<IntersectionPoint> intersectionPoints = equationsService.GetValidIntersectionPointsFromLinearEquationsAndPoint(linearEquations, userPoint, polylinePoints, userPoint);
 
-        var smallerDistanceIntersectionPoint = services.GetSmallerDistanceIntersectionPoint(intersectionPoints);
+        var smallerDistanceIntersectionPoint = equationsService.GetSmallerDistanceIntersectionPoint(intersectionPoints);
 
         var offset = smallerDistanceIntersectionPoint.Distance;
 
-        Point previousPoint = services.GetPreviousPoint(smallerDistanceIntersectionPoint);
-        double previousPointDistance = services.GetPreviousPointDistance(previousPoint, smallerDistanceIntersectionPoint);
+        Point previousPoint = equationsService.GetPreviousPoint(smallerDistanceIntersectionPoint);
+        double previousPointDistance = equationsService.GetPreviousPointDistance(previousPoint, smallerDistanceIntersectionPoint);
         int previousPointIndex = polylinePoints.FindIndex(pp => pp.X == previousPoint.X && pp.Y == previousPoint.Y);
 
-        double station = services.GetStation(previousPointDistance, previousPointIndex, polylinePoints);
+        double station = equationsService.GetStation(previousPointDistance, previousPointIndex, polylinePoints);
 
         Console.WriteLine($"OFFSET: {offset}.");
         Console.WriteLine($"STATION: {station}.");

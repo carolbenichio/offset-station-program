@@ -3,12 +3,12 @@ using ValueObjects;
 
 namespace Service;
 
-public class Services
+public class EquationsService
 {
-    private Equations _equations;
-    private PointsFactory _pointsFactory;
+    private readonly Equations _equations;
+    private readonly PointsFactory _pointsFactory;
 
-    public Services
+    public EquationsService
     (
         Equations equations,
         PointsFactory pointsFactory
