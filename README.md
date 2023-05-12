@@ -70,7 +70,7 @@ The linear equation of (200, 150) and (300, 175) is y = 0.25x + (100).
 
 4. Linear equations calculated, the program starts to search for valid Intersection Points from Linear Equations and the point entered by user using the following methods:
 
-- 🧮 GetValidIntersectionPointsFromLinearEquationsAndPoint
+- 🧮 **GetValidIntersectionPointsFromLinearEquationsAndPoint**:
     - A for loop through all linear equations:
     - 🧮 **GetPerpendicularLinearEquation**;
     - 🧮 **GetPerpendicularLinearEquation**;
