@@ -70,7 +70,7 @@ public class Equations : IEquations
         intersectionPoint.Point = polylinePoints[smallerDistanceIndex];
         if(smallerDistanceIndex == 0)
         {
-            intersectionPoint.LinearEquation = linearEquations[smallerDistanceIndex + 1];
+            intersectionPoint.LinearEquation = linearEquations[smallerDistanceIndex];
         } else 
         {
             intersectionPoint.LinearEquation = linearEquations[smallerDistanceIndex - 1];
