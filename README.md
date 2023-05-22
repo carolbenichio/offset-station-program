@@ -1,7 +1,7 @@
 # Offset-Station Program 🗺️
 
 This application is able to calculate the Offset and Station between a Point and a Polyline. 
-- <i>"Offset” is defined to be the smallest perpendicular distance to the polyline from the given Point</i>
+- <i>"Offset” is defined to be the smallest perpendicular distance to the polyline from the given Point.</i>
 - <i>"Station” is defined to be the distance from the start of the polyline, along the polyline, down to the
 location on the polyline where the smallest perpendicular line from the Point intersects the polyline.</i>
 
@@ -9,7 +9,7 @@ location on the polyline where the smallest perpendicular line from the Point in
 
 ### 💻 How to run the program:
 
-- If you're using **Windows OS**, you can just click twice at the ```offset-station-program.exe``` file;
+- If you're using **Windows**, you can just click twice at the ```offset-station-program.exe``` file;
 - If you're using **Mac** or **Linux**, you'll need to access the program’s folder and run the following command at the terminal:
     - ```dotnet run```  
 
@@ -17,7 +17,7 @@ location on the polyline where the smallest perpendicular line from the Point in
 - You’ll need to access the ```offset-station-program-test``` folder’s terminal and run the following command:
     - ```dotnet test``` 
 
-### Here are the steps of the program using a example:
+### 🧮 Here are the steps of the program using an example:
 
 1. The coordinates of the Polyline are read directly from an ASCII comma separated file containing Easting and Northing values and contain only data, no headers:
 
@@ -70,9 +70,8 @@ The linear equation of (200, 150) and (300, 175) is y = 0.25x + (100).
 
 4. Linear equations calculated, the program starts to search for valid Intersection Points from Linear Equations and the point entered by user using the following methods:
 
-- 🧮 GetValidIntersectionPointsFromLinearEquationsAndPoint
-    - A for loop through all linear equations:
-    - 🧮 **GetPerpendicularLinearEquation**;
+- 🧮 **GetValidIntersectionPointsFromLinearEquationsAndPoint**:
+    - A for loop through all linear equations;
     - 🧮 **GetPerpendicularLinearEquation**;
     - 🧮 **GetIntersectionPointFromLinearEquations**;
     - Checks if the intersection point is valid (within range X1, Y1 and X2, Y2);
