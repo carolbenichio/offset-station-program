@@ -28,7 +28,7 @@ public class EquationsService : IEquationsServices
         {
             while (!reader.EndOfStream)
             {
-                var line = reader.ReadLine();
+                string line = reader.ReadLine();
                 coordinates.Add(line);
             }
         }
@@ -80,7 +80,7 @@ public class EquationsService : IEquationsServices
     public List<LinearEquation> GetLinearEquations(List<Point> polylinePoints)
     {
         List<LinearEquation> linearEquations = new List<LinearEquation>();
-        for (var i = 0; i < polylinePoints.Count - 1; i++)
+        for (int i = 0; i < polylinePoints.Count - 1; i++)
         {
             LinearEquation linearEquation = _equations.GetLinearEquation(polylinePoints[i], polylinePoints[i + 1]);
             linearEquations.Add(linearEquation);
@@ -95,10 +95,10 @@ public class EquationsService : IEquationsServices
     public List<IntersectionPoint> GetValidIntersectionPointsFromLinearEquationsAndPoint(List<LinearEquation> linearEquations, List<Point> polylinePoints, Point userPoint)
     {
         List<IntersectionPoint> intersectionPoints = new List<IntersectionPoint>();
-        for(var i = 0; i < linearEquations.Count; i++)
+        for(int i = 0; i < linearEquations.Count; i++)
         {
             IntersectionPoint intersectionPoint = new IntersectionPoint();
-            var perpendicularLinearEquation = _equations.GetPerpendicularLinearEquation(userPoint, linearEquations[i].Slope);
+            LinearEquation perpendicularLinearEquation = _equations.GetPerpendicularLinearEquation(userPoint, linearEquations[i].Slope);
             intersectionPoint.Point = _equations.GetIntersectionPointFromLinearEquations(perpendicularLinearEquation, linearEquations[i]);
             
             if(intersectionPoint.Point.X > linearEquations[i].X1 && intersectionPoint.Point.X < linearEquations[i].X2 &&
@@ -131,8 +131,8 @@ public class EquationsService : IEquationsServices
 
     public IntersectionPoint GetSmallerDistanceIntersectionPoint(List<IntersectionPoint> intersectionPoints)
     {
-        var smallerDistanceIntersectionPoint = intersectionPoints.OrderBy(ip => ip.Distance).First();
-        var smallerDistanceIntersectionPointDistance = smallerDistanceIntersectionPoint.Distance;
+        IntersectionPoint smallerDistanceIntersectionPoint = intersectionPoints.OrderBy(ip => ip.Distance).First();
+        double smallerDistanceIntersectionPointDistance = smallerDistanceIntersectionPoint.Distance;
         
         return smallerDistanceIntersectionPoint;
     }
@@ -157,7 +157,7 @@ public class EquationsService : IEquationsServices
 
     public double GetPreviousPointDistance(Point previousPoint, IntersectionPoint smallerDistanceIntersectionPoint)
     {
-        var previousPointDistance = _equations.GetDistanceBetweenPoints(previousPoint, smallerDistanceIntersectionPoint.Point);
+        double previousPointDistance = _equations.GetDistanceBetweenPoints(previousPoint, smallerDistanceIntersectionPoint.Point);
         return previousPointDistance;
     }
 
@@ -165,9 +165,9 @@ public class EquationsService : IEquationsServices
     {
         double station = previousPointDistance;
 
-        for (var i = previousPointIndex - 1; i >= 0; i--)
+        for (int i = previousPointIndex - 1; i >= 0; i--)
         {
-            var pointsDistance = _equations.GetDistanceBetweenPoints(polylinePoints[i], polylinePoints[i + 1]);
+            double pointsDistance = _equations.GetDistanceBetweenPoints(polylinePoints[i], polylinePoints[i + 1]);
             station += pointsDistance;
         }
         Console.WriteLine($"-------------------------------------------------------------------------");

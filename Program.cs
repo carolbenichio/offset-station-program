@@ -12,10 +12,10 @@ internal class Program
         Console.WriteLine($"OFFSET AND STATION CALCULATION PROGRAM");
         Console.WriteLine($"-------------------------------------------------------------------------");
 
-        var equations = new Equations();
-        var pointsFactory = new PointsFactory();
+        Equations equations = new Equations();
+        PointsFactory pointsFactory = new PointsFactory();
 
-        var equationsService = new EquationsService(equations, pointsFactory);
+        EquationsService equationsService = new EquationsService(equations, pointsFactory);
 
         List<Point> polylinePoints = equationsService.GetPointsListFromCSVFile();
 
@@ -25,9 +25,9 @@ internal class Program
 
         List<IntersectionPoint> intersectionPoints = equationsService.GetValidIntersectionPointsFromLinearEquationsAndPoint(linearEquations, polylinePoints, userPoint);
 
-        var smallerDistanceIntersectionPoint = equationsService.GetSmallerDistanceIntersectionPoint(intersectionPoints);
+        IntersectionPoint smallerDistanceIntersectionPoint = equationsService.GetSmallerDistanceIntersectionPoint(intersectionPoints);
 
-        var offset = smallerDistanceIntersectionPoint.Distance;
+        double offset = smallerDistanceIntersectionPoint.Distance;
 
         Point previousPoint = equationsService.GetPreviousPoint(smallerDistanceIntersectionPoint);
         double previousPointDistance = equationsService.GetPreviousPointDistance(previousPoint, smallerDistanceIntersectionPoint);

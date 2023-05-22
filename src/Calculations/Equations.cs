@@ -23,8 +23,8 @@ public class Equations : IEquations
 
     public double GetDistanceFromPointToLinearEquation(LinearEquation linearEquation, Point point)
     {
-        var absolute = Math.Abs((linearEquation.Slope * point.X) - (point.Y) + (linearEquation.Intersection));
-        var divisor = Math.Sqrt(Math.Pow(linearEquation.Slope, 2) + 1);
+        double absolute = Math.Abs((linearEquation.Slope * point.X) - (point.Y) + (linearEquation.Intersection));
+        double divisor = Math.Sqrt(Math.Pow(linearEquation.Slope, 2) + 1);
         return absolute/divisor;
     }
 
@@ -39,8 +39,8 @@ public class Equations : IEquations
     public Point GetIntersectionPointFromLinearEquations(LinearEquation linearEquation1, LinearEquation linearEquation2)
     {
         Point intersectionPoint = new Point();
-        var dividend = (linearEquation2.Intersection - linearEquation1.Intersection);
-        var divisor = (linearEquation1.Slope - linearEquation2.Slope);
+        double dividend = (linearEquation2.Intersection - linearEquation1.Intersection);
+        double divisor = (linearEquation1.Slope - linearEquation2.Slope);
         
         intersectionPoint.X = dividend/divisor;
         intersectionPoint.Y = (linearEquation1.Slope * intersectionPoint.X) + linearEquation1.Intersection;
@@ -60,7 +60,7 @@ public class Equations : IEquations
         Console.WriteLine("so the distance is going to be measured from the given point to the closest point of the polyline.");
         
         List<double> distancesPointToPolylinePoints = new List<double>();
-        for(var i = 0; i < polylinePoints.Count; i++)
+        for(int i = 0; i < polylinePoints.Count; i++)
         {
             distancesPointToPolylinePoints.Add(GetDistanceBetweenPoints(userPoint, polylinePoints[i]));
         } 
